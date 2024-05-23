@@ -1,6 +1,7 @@
 # StrlnkIPScn
 
 A small, simple, powerful, fast, cross-platform CLI program to scan all devices on your local network. First made for my Starlink network so i can see when my server changes its address.
+![img.png](.github/assets/img.png)
 
 ## Installation
 ### You will need Java 21 or higher to run this program!
@@ -23,12 +24,11 @@ Want to add this program to PATH, so you can use it from anywhere at any time?
 java -jar %~dp0\StrlnkIPScn_1-0-0.jar %*
 ```
 2. Add the directory containing your jar file and the batch file to the PATH environment variable. You can do this by:  
-   -  Right-click on Computer.
-   -  Click on Properties.
-   -  Click on Advanced system settings.
-   -  Click on Environment Variables.
-   -  Under System Variables, find PATH, and click on it.
-   -  In the Edit windows, modify PATH by adding the directory of your jar file at the end, preceded with a semicolon (;).
+   - Press your Windows key and search for PATH.
+   - Click on Edit the system environment variables.
+   - Click on Environment Variables.
+   - Under System Variables, find PATH, and click on it.
+   - In the Edit windows, modify PATH by adding the directory of your jar file at the end, preceded with a semicolon (;).
 ### Linux
 1. Create a bash script named strlnkipscn in the same directory as your jar file with the following content:
 ```bash
