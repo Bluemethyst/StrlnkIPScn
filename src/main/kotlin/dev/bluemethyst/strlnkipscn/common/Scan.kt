@@ -9,7 +9,7 @@ data class Device(
     val name: String
 )
 
-suspend fun scanSubnet(subnet: String, range: IntRange): List<Device> {
+suspend fun scanSubnet(subnet: String, range: IntRange, allDevices: MutableList<Device>): List<Device> {
     val devices = mutableListOf<Device>()
     coroutineScope {
         val jobs = range.map { host ->
@@ -19,6 +19,7 @@ suspend fun scanSubnet(subnet: String, range: IntRange): List<Device> {
                     val name = getDeviceName(ip)
                     val device = Device(ip, name)
                     devices.add(device)
+                    allDevices.add(device)
                     println("Found device - IP: $ip, Name: $name")
                 }
             }
