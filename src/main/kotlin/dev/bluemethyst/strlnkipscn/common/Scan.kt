@@ -22,6 +22,7 @@ suspend fun scanSubnet(subnet: String, range: IntRange, allDevices: MutableList<
                     allDevices.add(device)
                     println("Found device - IP: $ip, Name: $name")
                 }
+                ensureActive()
             }
         }
         jobs.awaitAll()
