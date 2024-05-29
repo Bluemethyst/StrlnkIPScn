@@ -38,7 +38,7 @@ fun App() {
                             if (it.text.all { char -> char.isDigit() }) {
                                 subnetMin = it
                             }
-                        }, placeholder = { Text("Subnet Min") }, singleLine = true
+                        }, label = { Text("Subnet Min") }, singleLine = true
                         )
                     }
                     Column {
@@ -46,15 +46,7 @@ fun App() {
                             if (it.text.all { char -> char.isDigit() }) {
                                 subnetMax = it
                             }
-                        }, placeholder = { Text("Subnet Max") }, singleLine = true
-                        )
-                    }
-                    Column {
-                        TextField(value = ipRangeMax, onValueChange = {
-                            if (it.text.all { char -> char.isDigit() }) {
-                                ipRangeMax = it
-                            }
-                        }, placeholder = { Text("IP Range Max") }, singleLine = true
+                        }, label = { Text("Subnet Max") }, singleLine = true
                         )
                     }
                     Column {
@@ -62,30 +54,38 @@ fun App() {
                             if (it.text.all { char -> char.isDigit() }) {
                                 ipRangeMin = it
                             }
-                        }, placeholder = { Text("IP Range Min") }, singleLine = true
+                        }, label = { Text("IP Range Min") }, singleLine = true
+                        )
+                    }
+                    Column {
+                        TextField(value = ipRangeMax, onValueChange = {
+                            if (it.text.all { char -> char.isDigit() }) {
+                                ipRangeMax = it
+                            }
+                        }, label = { Text("IP Range Max") }, singleLine = true
                         )
                     }
                     var subnetRange: IntRange
+                    var snMin = 1
+                    var snMax = 1
+                    var irMin = 1
+                    var irMax = 254
                     var range: IntRange
                     try {
-                        subnetRange = if (subnetMin.text.isNotEmpty()) {
-                            subnetMin.text.toInt()..1
-                        } else if (subnetMax.text.isNotEmpty()) {
-                            1..subnetMax.text.toInt()
-                        } else if (subnetMin.text.isNotEmpty() && subnetMax.text.isNotEmpty()) {
-                            subnetMin.text.toInt()..subnetMax.text.toInt()
-                        } else {
-                            1..1
+                        if (subnetMin.text.isNotEmpty()) {
+                            snMin = subnetMin.text.toInt()
                         }
-                        range = if (ipRangeMin.text.isNotEmpty()) {
-                            ipRangeMin.text.toInt()..254
-                        } else if (ipRangeMax.text.isNotEmpty()) {
-                            1..ipRangeMax.text.toInt()
-                        } else if (ipRangeMin.text.isNotEmpty() && ipRangeMax.text.isNotEmpty()) {
-                            ipRangeMin.text.toInt()..ipRangeMax.text.toInt()
-                        } else {
-                            1..254
+                        if (subnetMax.text.isNotEmpty()) {
+                            snMax = subnetMax.text.toInt()
                         }
+                        subnetRange = snMin..snMax
+                        if (ipRangeMin.text.isNotEmpty()) {
+                            irMin = ipRangeMin.text.toInt()
+                        }
+                        if (ipRangeMax.text.isNotEmpty()) {
+                            irMax = ipRangeMax.text.toInt()
+                        }
+                        range = irMin..irMax
                     } catch (e: NumberFormatException) {
                         println(e)
                         subnetRange = 1..1
