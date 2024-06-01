@@ -8,7 +8,7 @@ import kotlinx.coroutines.*
 
 data class Device(
     val ip: String,
-    val name: String,
+    val name: String? = null,
     val mac: String? = null,
     val manufacturer: String? = null
 )/*
@@ -55,7 +55,10 @@ suspend fun scanIpRange(ipRange: Pair<String, String>, allDevices: MutableList<D
             async(Dispatchers.IO) {
                 val ip = "$subnet.$host"
                 if (ping(ip)) {
-                    val name = getDeviceName(ip)
+                    var name = getDeviceName(ip)
+                    if (name == ip) {
+                        name = null
+                    }
                     val mac = getMacAddress(ip)
                     val manufacturer = mac?.let { getManufacturer(it) }
                     val device = Device(ip, name, mac, manufacturer)

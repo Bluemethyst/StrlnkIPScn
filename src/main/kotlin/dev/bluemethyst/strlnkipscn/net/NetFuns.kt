@@ -41,12 +41,12 @@ fun getMacAddress(ip: String): String? {
     }
 }
 
-fun getDeviceName(ip: String): String {
+fun getDeviceName(ip: String): String? {
     return try {
         val address = InetAddress.getByName(ip)
         address.hostName
     } catch (e: Exception) {
-        "Unknown"
+        null
     }
 }
 
