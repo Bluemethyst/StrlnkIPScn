@@ -22,7 +22,10 @@ fun App() {
         var ipRangesInput by remember { mutableStateOf(TextFieldValue("192.168.1.1-254, 192.168.2.1-254, 192.168.100.1-254")) }
         val allDevices = remember { mutableStateListOf<Device>() }
         val coroutineScope = rememberCoroutineScope()
-        Box(modifier = Modifier.fillMaxSize().background(colorScheme.background).border(10.dp, colorScheme.primary).padding(20.dp)) {
+        Box(
+            modifier = Modifier.fillMaxSize().background(colorScheme.background).border(10.dp, colorScheme.primary)
+                .padding(20.dp)
+        ) {
 
             Column(modifier = Modifier.fillMaxSize().background(colorScheme.background)) {
                 Row(
@@ -33,52 +36,59 @@ fun App() {
                         TextField(
                             value = ipRangesInput,
                             onValueChange = { ipRangesInput = it },
-                            label = { Text("IP Ranges") },
+                            label = { Text("IP Ranges", color = colorScheme.onBackground) },
                             singleLine = true
                         )
                     }
                     var scanning: String by remember { mutableStateOf("Scan Network") }
                     var isEnabled: Boolean by remember { mutableStateOf(true) }
-                    Button(onClick = {
-                        allDevices.clear()
-                        coroutineScope.launch {
-                            scanning = "Scanning..."
-                            isEnabled = false
-                            val ipRanges = parseIpRanges(ipRangesInput.text)
-                            for (ipRange in ipRanges) {
-                                println("Scanning range ${ipRange.first} to ${ipRange.second}...")
-                                val devices = scanIpRange(ipRange, allDevices)
+                    Button(
+                        onClick = {
+                            allDevices.clear()
+                            coroutineScope.launch {
+                                scanning = "Scanning..."
+                                isEnabled = false
+                                val ipRanges = parseIpRanges(ipRangesInput.text)
+                                for (ipRange in ipRanges) {
+                                    println("Scanning range ${ipRange.first} to ${ipRange.second}...")
+                                    val devices = scanIpRange(ipRange, allDevices)
+                                }
+                                scanning = "Scan Network"
+                                isEnabled = true
                             }
-                            scanning = "Scan Network"
-                            isEnabled = true
-                        }
-                    }, enabled = isEnabled) {
-                        Text(scanning)
+                        },
+                        enabled = isEnabled,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorScheme.primary,
+                            disabledContainerColor = colorScheme.onPrimary
+                        )
+                    ) {
+                        Text(scanning, color = colorScheme.onBackground)
                     }
                 }
                 Row {
                     Column(modifier = Modifier.width(200.dp)) {
-                        Text("IP:", color = colorScheme.secondary)
+                        Text("IP:", color = colorScheme.onBackground)
                         for (device in allDevices) {
-                            Text(device.ip, color = colorScheme.primary)
+                            Text(device.ip, color = colorScheme.onPrimary)
                         }
                     }
                     Column(modifier = Modifier.width(200.dp)) {
-                        Text("Name:", color = colorScheme.secondary)
+                        Text("Name:", color = colorScheme.onBackground)
                         for (device in allDevices) {
-                            Text(device.name ?: " ", color = colorScheme.primary)
+                            Text(device.name ?: " ", color = colorScheme.onPrimary)
                         }
                     }
                     Column(modifier = Modifier.width(200.dp)) {
-                        Text("MAC:", color = colorScheme.secondary)
+                        Text("MAC:", color = colorScheme.onBackground)
                         for (device in allDevices) {
-                            Text(device.mac ?: " ", color = colorScheme.primary)
+                            Text(device.mac ?: " ", color = colorScheme.onPrimary)
                         }
                     }
                     Column(modifier = Modifier.width(200.dp)) {
-                        Text("Manufacturer:", color = colorScheme.secondary)
+                        Text("Manufacturer:", color = colorScheme.onBackground)
                         for (device in allDevices) {
-                            Text(device.manufacturer ?: " ", color = colorScheme.primary)
+                            Text(device.manufacturer ?: " ", color = colorScheme.onPrimary)
                         }
                     }
                 }

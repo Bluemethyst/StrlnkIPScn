@@ -5,7 +5,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 val DarkColorPalette = darkColorScheme(
-    background = Color(0xFF121212), primary = Color(0xFFBB86FC), secondary = Color(0xFF03DAC6)
+    background = Color(0xFF1E1E2E),
+    primary = Color(0xFF181825),
+    secondary = Color(0xFF11111B),
+    onBackground = Color(0xFFCBA6F7),
+    onPrimary = Color(0xFFCDD6F4),
+    // https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
 )
 
 val LightColorPalette = lightColorScheme(
